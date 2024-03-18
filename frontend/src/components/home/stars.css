@@ -4,19 +4,24 @@
         opacity: 0;
     }
 }
-  
+
 .star {
     clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
     background-color: white;
-    width: 1rem;
-    height: 1rem;
+    width: 2rem;
+    height: 2rem;
     position: absolute;
     opacity: 0.8;
     animation: fall-diagonal 1.5s infinite;
 }
 
-    .star:nth-child(1) { top: 0; right: 10%; animation-delay: 0s; }
-    .star:nth-child(2) { top: 1rem; right: 20%; animation-delay: 0.2s; }
-    .star:nth-child(3) { top: 2rem; right: 30%; animation-delay: 0.4s; }
-    .star:nth-child(4) { top: 3rem; right: 40%; animation-delay: 0.6s; }
-    .star:nth-child(5) { top: 4rem; right: 50%; animation-delay: 0.8s; }
+.star:nth-child(1) { top: 0; right: 10%; animation-delay: 1.3s; }
+.star:nth-child(2) { top: 1rem; right: 20%; animation-delay: 0.4s; }
+.star:nth-child(3) { top: 2rem; right: 30%; animation-delay: 2.5s; }
+.star:nth-child(4) { top: 3rem; right: 40%; animation-delay: 1.9s; }
+.star:nth-child(5) { top: 4rem; right: 50%; animation-delay: 0.7s; }
+.star:nth-child(6) { top: 0; right: 15%; animation-delay: 2.2s; }
+.star:nth-child(7) { top: 1rem; right: 25%; animation-delay: 1s; }
+.star:nth-child(8) { top: 2rem; right: 35%; animation-delay: 0.1s; }
+.star:nth-child(9) { top: 3rem; right: 45%; animation-delay: 1.6s; }
+.star:nth-child(10) { top: 4rem; right: 55%; animation-delay: 2.8s; }
