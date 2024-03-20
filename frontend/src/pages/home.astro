@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Tag from "../components/home/Tag.astro"
 ---
 <style>
   @import '../components/home/stars.css';
@@ -28,7 +29,46 @@ import Layout from "../layouts/Layout.astro";
       <div class="star"></div>
     </div>
   </div>
-  <div class="flex flex-col w-full justify-center items-center bg-slate-600">
-    <div class="flex justify-center items-center"></div>
-  </div>
+  <div class="flex flex-col w-full justify-center items-center">
+    <div class="flex justify-center items-center p-10 gap-3">
+        <div class="flex flex-col justify-center items-center space-y-1">
+            <div class="text-lg font-semibold text-gray-700 mb-4">Trending tags</div>
+            <div class="flex flex-wrap justify-center gap-1">
+                <Tag href="/search?tag=programming" title="Programming" />
+                <Tag href="/search?tag=writing" title="Writing" />
+                <Tag href="/search?tag=machine-learning" title="Machine Learning" />
+            </div>
+            <div class="flex flex-wrap justify-center gap-1">
+              <Tag href="/search?tag=data-science" title="Data Science" />
+              <Tag href="/search?tag=self-improvement" title="Self Improvement" />
+              <Tag href="/search?tag=productivity" title="Productivity" />
+            </div>
+            <div class="flex flex-wrap justify-center gap-1">
+                <Tag href="/search?tag=relationships" title="Relationships" />
+                <Tag href="/search?tag=technology" title="Technology" />
+                <Tag href="/search?tag=politics" title="Politics" />
+            </div>
+        </div>
+        <div class="bg-gray-800 w-0.5 h-auto self-stretch"></div>
+        <div class="flex flex-col justify-center items-center space-y-1">
+            <div class="text-lg font-semibold text-gray-700 mb-4 text-center">Tags for you</div>
+            <div class="flex flex-wrap justify-center gap-1">
+                <Tag href="/search?tag=programming" title="Programming" />
+                <Tag href="/search?tag=writing" title="Writing" />
+                <Tag href="/search?tag=machine-learning" title="Machine Learning" />
+            </div>
+            <div class="flex flex-wrap justify-center gap-1">
+              <Tag href="/search?tag=data-science" title="Data Science" />
+              <Tag href="/search?tag=self-improvement" title="Self Improvement" />
+              <Tag href="/search?tag=productivity" title="Productivity" />
+            </div>
+            <div class="flex flex-wrap justify-center gap-1">
+                <Tag href="/search?tag=relationships" title="Relationships" />
+                <Tag href="/search?tag=technology" title="Technology" />
+                <Tag href="/search?tag=politics" title="Politics" />
+            </div>
+        </div>
+    </div>
+</div>
+
 </Layout>
