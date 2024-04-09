@@ -1,13 +1,13 @@
-const VlogCard = ({ vlog }) => {
-  const redirectToVlog = (e) => {
-    alert("Redirecting to vlog");
-    window.location.href = `/vlogs/${vlog.id}`;
+const BlogCard = ({ blog }) => {
+  const redirectToBlog = (e) => {
+    alert("Redirecting to blog");
+    window.location.href = `/blogs/${blog.id}`;
   };
 
   return (
     <div
-      className="py-10 border-b-[1px] border-slate-200 flex items-center justify-between cursor-pointer"
-      onClick={redirectToVlog}
+      className="py-10 w-full max-w-[1000px] border-b-[1px] border-slate-200 flex items-center justify-between cursor-pointer"
+      onClick={redirectToBlog}
     >
       <div className="flex flex-col">
         <div className="flex gap-2 items-center">
@@ -17,9 +17,9 @@ const VlogCard = ({ vlog }) => {
           />
           <label className="sm text-slate-600">Carlos Aleman</label>
         </div>
-        <h1 className="font-bold text-2xl">{vlog.name}</h1>
-        <h3 className="text-slate-600 text-md">{vlog.status}</h3>
-        <h3 className="text-slate-600 text-xs mt-10">{vlog.created}</h3>{" "}
+        <h1 className="font-bold text-2xl">{blog.autor}</h1>
+        <h3 className="text-slate-600 text-md">{blog.status}</h3>
+        <h3 className="text-slate-600 text-xs mt-10">{blog.created}</h3>{" "}
         <div className="flex items-center gap-2 mt-4">
           <button className="">
             <img
@@ -27,15 +27,15 @@ const VlogCard = ({ vlog }) => {
               className="w-5 h-5"
             />
           </button>
-          <label>{vlog.id}</label>
+          <label>{blog.id}</label>
         </div>
       </div>
 
       <div>
-        <img src={vlog.image} className="h-[150px]" />
+        <img src={blog.image} className="h-[150px]" />
       </div>
     </div>
   );
 };
 
-export default VlogCard;
+export default BlogCard;

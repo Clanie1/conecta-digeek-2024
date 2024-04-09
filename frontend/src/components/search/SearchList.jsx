@@ -1,34 +1,30 @@
 import { useState, useEffect, useRef } from "react";
-import VlogCard from "./VlogCard";
+import BlogCard from "./BlogCard";
+import { getPosts } from "../../services/functions";
 
 const SearchList = () => {
-  const [vlogs, setVlogs] = useState([]);
-  const [filteredVlogs, setfilteredVlogs] = useState([]);
+  const [blogs, setBlogs] = useState([]);
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
   const inputRef = useRef(null);
 
-  const getVlogs = async () => {
-    try {
-      const res = await fetch("https://rickandmortyapi.com/api/character");
-      const data = await res.json();
-      setfilteredVlogs(data.results);
-      setVlogs(data.results);
-    } catch {
-      console.log("Error in fetching data");
-    }
+  const getBlogs = async () => {
+    const posts = await getPosts([]);
+    setBlogs(posts);
+    setFilteredBlogs(posts);
   };
 
-  console.log(vlogs);
+  console.log(blogs);
 
-  const searchVlog = () => {
+  const searchBlogs = () => {
     const searchValue = inputRef.current.value;
-    const filteredVlogs = vlogs.filter((vlog) => {
-      return vlog.name.toLowerCase().includes(searchValue.toLowerCase());
+    const filteredblogs = blogs.filter((blog) => {
+      return blog.name.toLowerCase().includes(searchValue.toLowerCase());
     });
-    setfilteredVlogs(filteredVlogs);
+    setFilteredBlogs(filteredblogs);
   };
 
   useEffect(() => {
-    getVlogs();
+    getBlogs();
   }, []);
 
   return (
@@ -56,7 +52,7 @@ const SearchList = () => {
             ref={inputRef}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                searchVlog();
+                searchBlogs();
               }
             }}
             type="search"
@@ -67,8 +63,8 @@ const SearchList = () => {
       </div>
       <div className="flex w-full mt-4">
         <div className="w-full md:w-2/3 md:px-10">
-          {filteredVlogs.map((vlog, index) => {
-            return <VlogCard key={index} vlog={vlog} />;
+          {filteredBlogs.map((blog, index) => {
+            return <BlogCard key={index} blog={blog} />;
           })}
         </div>
         <div className="w-1/3 border-l-[1px] border-slate-300 p-2 hidden md:flex">
