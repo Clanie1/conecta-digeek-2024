@@ -13,7 +13,7 @@ interface Tag {
     // Agrega aquí cualquier otra propiedad que necesites
 }
 
-async function postPost(content: string, autor: string, tagIds: number[], status?: string): Promise<void>  {
+export async function postPost(content: string, autor: string, tagIds: number[], status?: string): Promise<void>  {
     const url: string = 'https://directus-10-10-4-p3ab.onrender.com/items/posts';
     const tags: Tag[] = tagIds.map(id => ({ id }));
     const data: Post = {
@@ -31,7 +31,7 @@ async function postPost(content: string, autor: string, tagIds: number[], status
     }
 }
 
-async function updatePost(postId: number, content: string, autor: string, tagIds: number[], status?: string): Promise<void> {
+export async function updatePost(postId: number, content: string, autor: string, tagIds: number[], status?: string): Promise<void> {
     const url: string = `https://directus-10-10-4-p3ab.onrender.com/items/posts/${postId}`;
     const tags: Tag[] = tagIds.map(id => ({ id }));
     const data: Post = {
@@ -54,7 +54,7 @@ interface Filter {
     // Agrega aquí cualquier otra propiedad que necesites para los filtros
 }
 
-async function getPosts(filters: Filter[]): Promise<Post[]> {
+export async function getPosts(filters: Filter[]): Promise<Post[]> {
     let url: string = 'https://directus-10-10-4-p3ab.onrender.com/items/posts?fields=*.*,postTags.tags_id.*&filter[status][_eq]=published';
 
     filters.forEach((filter, index) => {
@@ -75,7 +75,7 @@ async function getPosts(filters: Filter[]): Promise<Post[]> {
     }
 }
 
-async function getSinglePost(postId: number): Promise<Post> {
+export async function getSinglePost(postId: number): Promise<Post> {
     try {
         const url: string = `https://directus-10-10-4-p3ab.onrender.com/items/posts/${postId}`;
         const response: AxiosResponse<Post> = await axios.get(url);
@@ -87,7 +87,7 @@ async function getSinglePost(postId: number): Promise<Post> {
     }
 }
 
-async function getFeaturedPosts(): Promise<Post[]> {
+export async function getFeaturedPosts(): Promise<Post[]> {
     const url: string = 'https://directus-10-10-4-p3ab.onrender.com/items/posts?fields=*.*&filter[featured][_eq]=true';
     try {
         const response: AxiosResponse<Post[]> = await axios.get(url);
