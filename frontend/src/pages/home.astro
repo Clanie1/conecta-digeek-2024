@@ -14,7 +14,10 @@ import FeaturedPostsComponent from "../components/home/FeaturedPostsComponent";
   <StarsBackground />
   <div class="flex flex-col w-full justify-center items-center">
     <div class="flex justify-center items-start p-10 gap-3">
-      <div class="w-2/3">
+      <div class="w-2/3 flex flex-col justify-end">
+        <div class="text-lg font-semibold text-gray-700 mb-4 text-center">
+          Featured blogs
+        </div>
         <FeaturedPostsComponent client:load />
       </div>
       <div class="bg-gray-800 w-0.5 h-auto self-stretch" />
