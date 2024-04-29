@@ -1,6 +1,34 @@
-import StarsBackground from "./StarsBackground";
+import React, { useEffect, useState } from "react";
+import SoftwareAnimation from "./animations/software/SoftwareAnimation";
+
+const animations = [
+  { type: "Software", component: SoftwareAnimation },
+  // { type: "Mecanica", component: MechanicalAnimation },
+  // { type: "Mecatronica", component: MechatronicsAnimation },
+  // { type: "DisenoGrafico", component: GraphicDesignAnimation },
+  // { type: "EnergiasRenovables", component: RenewableEnergyAnimation },
+  // { type: "Industrial", component: IndustrialEngineeringAnimation },
+];
+
+const getRandomAnimation = () => {
+  const randomIndex = Math.floor(Math.random() * animations.length);
+  return animations[randomIndex].component;
+};
 
 const HeroSection = () => {
+  const [SelectedAnimation, setSelectedAnimation] = useState(() =>
+    getRandomAnimation()
+  );
+
+  useEffect(() => {
+    const handleReloadAnimation = () => {
+      setSelectedAnimation(getRandomAnimation());
+    };
+
+    window.addEventListener("load", handleReloadAnimation);
+    return () => window.removeEventListener("load", handleReloadAnimation);
+  }, []);
+
   return (
     <div className="flex w-full justify-around items-center h-[430px] bg-[#6163d4] px-4">
       <div className="flex flex-col gap-4">
@@ -15,7 +43,7 @@ const HeroSection = () => {
           Start now
         </button>
       </div>
-      <StarsBackground />
+      <SelectedAnimation />
     </div>
   );
 };
