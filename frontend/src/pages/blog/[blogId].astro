@@ -1,0 +1,12 @@
+---
+const { blogId } = Astro.params;
+import Layout from "../../layouts/Layout.astro";
+import { getSinglePost } from "../../services/functions";
+import Blog from "../../components/Blog.jsx";
+---
+
+<Layout title="Conecta Digeek">
+  <div class="w-full flex justify-center">
+    <Blog blogId={blogId} client:load />
+  </div>
+</Layout>
