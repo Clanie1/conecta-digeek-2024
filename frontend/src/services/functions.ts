@@ -1,26 +1,45 @@
 import axios, { AxiosResponse } from 'axios';
+import readTimeFunction from './readTimeFunction';
 
 interface Post {
     id?: number;
     content: string;
-    autor: string;
-    status?: string;
     postTags: Tag[];
+    summary: string;
+    read_time: string;
+    titulo: string;
+    image: string;
+    author: Author;
+    status?: string;
 }
+
 
 interface Tag {
     id: number;
-    // Agrega aquí cualquier otra propiedad que necesites
+    tag?: string;
 }
+interface Author{
+    id: number;
+    name?: string;
+    image?: string;
+} 
 
-export async function postPost(content: string, autor: string, tagIds: number[], status?: string): Promise<void>  {
+export async function postPost(
+    content: string, postTags:number[], summary: string, titulo: string, image: string, author: number, status?: string,
+): Promise<void>  {
+    const time = readTimeFunction(content);
     const url: string = 'https://directus-10-10-4-p3ab.onrender.com/items/posts';
-    const tags: Tag[] = tagIds.map(id => ({ id }));
+    const tags : Tag[] = postTags.map(id => ({ id }));
+    const authorFormatted = { id: author };
     const data: Post = {
         content,
-        autor,
         postTags: tags,
-        status
+        summary,
+        read_time: time.toString(),
+        titulo,
+        image,
+        author: authorFormatted,
+        status,
     };
 
     try {
@@ -31,14 +50,22 @@ export async function postPost(content: string, autor: string, tagIds: number[],
     }
 }
 
-export async function updatePost(postId: number, content: string, autor: string, tagIds: number[], status?: string): Promise<void> {
+export async function updatePost(
+    postId:number,content: string, postTags:number[], summary: string, titulo: string, image: string, author: number, status?: string,
+): Promise<void> {
+    const time = readTimeFunction(content);
     const url: string = `https://directus-10-10-4-p3ab.onrender.com/items/posts/${postId}`;
-    const tags: Tag[] = tagIds.map(id => ({ id }));
+    const tags: Tag[] = postTags.map(id => ({ id }));
+    const authorFormatted = { id: author };
     const data: Post = {
         content,
-        autor,
         postTags: tags,
-        status
+        summary,
+        read_time: time.toString(),
+        titulo,
+        image,
+        author: authorFormatted,
+        status,
     };
 
     try {
@@ -92,6 +119,18 @@ export async function getFeaturedPosts(): Promise<Post[]> {
     try {
         const response: AxiosResponse<Post[]> = await axios.get(url);
         console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('There was a problem with your Axios request:', error);
+        throw error;
+    }
+}
+
+export async function getTags(): Promise<Tag[]> {
+    const url: string = 'https://directus-10-10-4-p3ab.onrender.com/items/tags';
+    try {
+        const response: AxiosResponse<Tag[]> = await axios.get(url);
+        console.log('Tags retrieved successfully:', response.data);
         return response.data;
     } catch (error) {
         console.error('There was a problem with your Axios request:', error);
