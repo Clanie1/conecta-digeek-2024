@@ -1,0 +1,29 @@
+.gear {
+  color: white;
+  animation: spin infinite linear;
+}
+
+.large {
+  animation-duration: 10s; /* 200px */
+  font-size: 200px;
+}
+
+.medium {
+  animation-duration: 6.5s; /* 130px, faster than large */
+  font-size: 130px;
+  animation-direction: reverse;
+}
+
+.small {
+  animation-duration: 3s; /* 70px, faster than medium */
+  font-size: 70px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

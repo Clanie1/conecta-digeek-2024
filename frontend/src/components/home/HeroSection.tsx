@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import SoftwareAnimation from "./animations/software/SoftwareAnimation";
+import MechanicalAnimation from "./animations/mechanics/MechanicalAnimation";
 
 const animations = [
-  { type: "Software", component: SoftwareAnimation },
-  // { type: "Mecanica", component: MechanicalAnimation },
+  // { type: "Software", component: SoftwareAnimation },
+  { type: "Mecanica", component: MechanicalAnimation },
   // { type: "Mecatronica", component: MechatronicsAnimation },
   // { type: "DisenoGrafico", component: GraphicDesignAnimation },
   // { type: "EnergiasRenovables", component: RenewableEnergyAnimation },
@@ -43,7 +44,9 @@ const HeroSection = () => {
           Start now
         </button>
       </div>
-      <SelectedAnimation />
+      <div className="flex justify-start items-start">
+        <SelectedAnimation />
+      </div>
     </div>
   );
 };
