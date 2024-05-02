@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import SoftwareAnimation from "./animations/software/SoftwareAnimation";
 import MechanicalAnimation from "./animations/mechanics/MechanicalAnimation";
+import IndustrialEngineeringAnimation from "./animations/industrial/IndustrialAnimation";
 
 const animations = [
   // { type: "Software", component: SoftwareAnimation },
-  { type: "Mecanica", component: MechanicalAnimation },
+  // { type: "Mecanica", component: MechanicalAnimation },
   // { type: "Mecatronica", component: MechatronicsAnimation },
   // { type: "DisenoGrafico", component: GraphicDesignAnimation },
   // { type: "EnergiasRenovables", component: RenewableEnergyAnimation },
-  // { type: "Industrial", component: IndustrialEngineeringAnimation },
+  { type: "Industrial", component: IndustrialEngineeringAnimation },
 ];
 
 const getRandomAnimation = () => {
