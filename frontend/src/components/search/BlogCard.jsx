@@ -1,4 +1,5 @@
 import { RiAccountCircleFill } from "react-icons/ri";
+import TagLabel from "./TagLabel";
 
 const BlogCard = ({ blog }) => {
   const redirectToBlog = (e) => {
@@ -32,9 +33,7 @@ const BlogCard = ({ blog }) => {
 
       <div className="flex gap-2 h-full self-end">
         {blog.postTags.map((tag) => (
-          <div className="rounded-full h-fit bg-[#7678FF20] px-6 py-[2px] text-center text-[#7678FFFF] font-bold text-xs">
-            {tag.tags_id.tag}
-          </div>
+          <TagLabel tag={tag} />
         ))}
       </div>
 
