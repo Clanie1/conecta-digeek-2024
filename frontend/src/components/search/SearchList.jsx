@@ -11,8 +11,8 @@ const SearchList = () => {
   // filters
   const [tags, setTags] = useState([]);
   const [authors, setAuthors] = useState([]);
-  const [releaseDate, setReleaseDate] = useState([]);
   const inputRef = useRef(null);
+  const blogDateFilter = useRef(null);
   const [selectedTags, setSelectedTags] = useState([]);
 
   // View More
@@ -37,12 +37,32 @@ const SearchList = () => {
     setFilteredBlogs(filteredblogs);
   };
 
+  const filterByDate = () => {
+    let filterDate = new Date();
+    switch (blogDateFilter.current.value) {
+      case "today":
+        break;
+      case "lastWeek":
+        filterDate.setDate(filterDate.getDate() - 7);
+        break;
+      case "lastMonth":
+        filterDate.setMonth(filterDate.getMonth() - 1);
+        break;
+    }
+    const blogsOnDate = blogs.filter((blog) => {
+      const blogDate = new Date(blog.date_created);
+      return blogDate > filterDate;
+    });
+    setFilteredBlogs(blogsOnDate);
+  };
+
   useEffect(() => {
     getServerTags();
   }, []);
 
   useEffect(() => {
     getBlogs();
+    filterByDate();
   }, [selectedTags]);
 
   return (
@@ -226,6 +246,8 @@ const SearchList = () => {
           <select
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-2"
             defaultValue={""}
+            onChange={filterByDate}
+            ref={blogDateFilter}
           >
             <option disabled hidden value="">
               Selecciona una Fecha
