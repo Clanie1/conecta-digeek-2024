@@ -94,7 +94,6 @@ export async function getPosts(filterIds: number[]): Promise<Post[]> {
     const deepFilter: string = `&filter[_or][${index}][postTags][tags_id][_in]=${filterId}`;
     url += deepFilter;
   });
-  console.log(filterIds);
 
   try {
     const response: AxiosResponse<{ data: Post[] }> = await axios.get(url);

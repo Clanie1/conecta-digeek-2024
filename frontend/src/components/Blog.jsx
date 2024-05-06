@@ -42,7 +42,6 @@ function Blog({ blogId }) {
       </div>
     );
 
-  console.log(blog);
   return (
     <div className="flex flex-col py-12">
       <div className="prose max-w-none w-[50%] m-auto flex flex-col">

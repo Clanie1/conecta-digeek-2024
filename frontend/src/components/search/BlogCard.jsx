@@ -6,7 +6,6 @@ const BlogCard = ({ blog }) => {
   const redirectToBlog = (e) => {
     window.location.href = `/blog/${blog.id}`;
   };
-  console.log(blog);
   return (
     <div
       className="py-10 w-full max-w-[1920px] border-b-[1px] border-slate-200 flex items-center justify-between cursor-pointer"
