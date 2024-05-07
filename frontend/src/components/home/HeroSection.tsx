@@ -5,7 +5,7 @@ import IndustrialEngineeringAnimation from "./animations/industrial/IndustrialAn
 
 const animations = [
   // { type: "Software", component: SoftwareAnimation },
-  // { type: "Mecanica", component: MechanicalAnimation },
+  { type: "Mecanica", component: MechanicalAnimation },
   // { type: "Mecatronica", component: MechatronicsAnimation },
   // { type: "DisenoGrafico", component: GraphicDesignAnimation },
   // { type: "EnergiasRenovables", component: RenewableEnergyAnimation },
@@ -41,9 +41,12 @@ const HeroSection = () => {
         <div className="flex flex-col text-white font-light text-3xl">
           Share your work to the world
         </div>
-        <button className="text-lg rounded-2xl border-2 border-white bg-white font-semibold text-[#6163d4] px-3 py-1 w-1/3 transition duration-300 hover:scale-105 hover:bg-[#6163d4] hover:text-white">
+        <a
+          href="/search"
+          className="flex justify-center items-center text-lg rounded-2xl border-2 border-white bg-white font-semibold text-[#6163d4] px-3 py-1 w-1/3 transition duration-300 hover:scale-105 hover:bg-[#6163d4] hover:text-white"
+        >
           Start now
-        </button>
+        </a>
       </div>
       <div className="flex justify-start items-start">
         <SelectedAnimation />
