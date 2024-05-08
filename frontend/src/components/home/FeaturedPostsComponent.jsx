@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BlogCard from "../search/BlogCard.jsx";
-import { getFeaturedPosts } from "../../services/functions.ts";
-
-type Post = {
-  id: string;
-  autor: string;
-  status: string;
-  created: string;
-  image: string;
-};
+import { getFeaturedPosts } from "../../services/functions";
 
 const FeaturedPostsComponent = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState([]);
 
   const getFeaturedBlogs = async () => {
     const response = await getFeaturedPosts([]);
+    console.log(response.data);
     setPosts(response.data);
   };
 

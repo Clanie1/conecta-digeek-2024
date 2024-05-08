@@ -21,6 +21,7 @@ const SearchList = () => {
 
   const getBlogs = async () => {
     const posts = await getPosts(selectedTags.map((tag) => tag.id));
+    console.log(posts);
     setBlogs(posts);
     setFilteredBlogs(posts);
   };
