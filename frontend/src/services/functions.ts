@@ -77,16 +77,22 @@ export async function updatePost(
 }
 
 interface Filter {
-    tagId: number;
+    tags: number[];
+    author: number[];
     // Agrega aquí cualquier otra propiedad que necesites para los filtros
 }
 
-export async function getPosts(filters: Filter[]): Promise<Post[]> {
+export async function getPosts(filters: Filter): Promise<Post[]> {
     let url: string = 'https://directus-10-10-4-p3ab.onrender.com/items/posts?fields=*.*,postTags.tags_id.*&filter[status][_eq]=published';
+    
+    filters.tags.forEach((filter, index) => {
+        const tagsFilter: string = `&filter[_and][0][_or][${index}][postTags][tags_id][_in]=${filter}`;
+        url += tagsFilter;
+    });
 
-    filters.forEach((filter, index) => {
-        const deepFilter: string = `&filter[_or][${index}][postTags][tags_id][_in]=${filter.tagId}`;
-        url += deepFilter;
+    filters.author.forEach((filter, index) => {
+        const authorFiler: string = `&filter[_and][1][_or][${index}][author][id]=${filter}`;
+        url += authorFiler;
     });
 
     try {
@@ -115,7 +121,7 @@ export async function getSinglePost(postId: number): Promise<Post> {
 }
 
 export async function getFeaturedPosts(): Promise<Post[]> {
-    const url: string = 'https://directus-10-10-4-p3ab.onrender.com/items/posts?fields=*.*&filter[featured][_eq]=true';
+    const url: string = 'https://directus-10-10-4-p3ab.onrender.com/items/posts?fields=*.*,postTags.tags_id.*&filter[featured][_eq]=true';
     try {
         const response: AxiosResponse<Post[]> = await axios.get(url);
         console.log(response.data);
