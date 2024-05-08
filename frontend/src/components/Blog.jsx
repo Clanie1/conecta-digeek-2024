@@ -10,7 +10,6 @@ function Blog({ blogId }) {
   const fetchBlog = async () => {
     const post = await getSinglePost(blogId);
     setBlog(post.data);
-    console.log(post.data);
   };
 
   useEffect(() => {
@@ -47,6 +46,7 @@ function Blog({ blogId }) {
     <div className="flex flex-col py-12">
       <div className="prose max-w-none w-[50%] m-auto flex flex-col">
         <h1>{blog.titulo}</h1>
+        <h1 className="text-gray-600 text-xl font-light">{blog.summary}</h1>
         <img
           src={blog.image}
           className="w-full max-h-[600px] object-cover m-auto"
