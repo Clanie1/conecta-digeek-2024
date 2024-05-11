@@ -1,11 +1,12 @@
 import { RiAccountCircleFill } from "react-icons/ri";
 import TagLabel from "./TagLabel";
 import { BsDot } from "react-icons/bs";
+import { useCallback } from "react";
 
 const BlogCard = ({ blog }) => {
-  const redirectToBlog = (e) => {
+  const redirectToBlog = useCallback((e) => {
     window.location.href = `/blog/${blog.id}`;
-  };
+  }, []);
   return (
     <div
       className="py-10 w-full max-w-[1920px] border-b-[1px] border-slate-200 flex items-center justify-between cursor-pointer"
@@ -13,8 +14,7 @@ const BlogCard = ({ blog }) => {
     >
       <div className="flex flex-col w-[400px]">
         <div className="flex items-center">
-          <div className="flex items-center">
-            <RiAccountCircleFill className="h-[20px] w-auto text-[#7678FF]" />
+          <div className="flex items-center gap-2">
             <img
               src={blog.author.image}
               className="h-[20px] w-[20px] rounded-full object-cover"
