@@ -9,12 +9,14 @@ const SearchList = () => {
   const [blogs, setBlogs] = useState([]);
   const [filteredBlogs, setFilteredBlogs] = useState(undefined);
 
+  //ref
+  const inputRef = useRef(null);
+
   // filters
   const [tags, setTags] = useState([]);
-  const [authors, setAuthors] = useState([]);
-  const inputRef = useRef(null);
-  const blogDateFilter = useRef(null);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [authors, setAuthors] = useState([]);
+  const [selectedAuthors, setSelectedAuthors] = useState([]);
 
   // View More
   const [viewMoreTags, setViewMoreTags] = useState(false);
@@ -44,7 +46,11 @@ const SearchList = () => {
 
   useEffect(() => {
     getServerTags();
-    getBlogs(selectedTags.map((tag) => tag.id));
+    const filters = {
+      tags: selectedTags.map((tag) => tag.id),
+      author: [],
+    };
+    getBlogs(filters);
   }, [selectedTags]);
 
   return (
@@ -146,10 +152,14 @@ const SearchList = () => {
                 return (
                   <div
                     onClick={() => {
-                      if (selectedTags.includes(tag)) {
+                      if (
+                        selectedTags.some(
+                          (selectedTag) => selectedTag.tag === tag.tag
+                        )
+                      ) {
                         const updatedSelectedTags = selectedTags.filter(
                           (filterTag) => {
-                            return filterTag != tag;
+                            return filterTag.tag != tag.tag;
                           }
                         );
                         setSelectedTags(updatedSelectedTags);
@@ -163,7 +173,11 @@ const SearchList = () => {
                     <TagLabel
                       key={index}
                       tag={tag.tag}
-                      disabled={!selectedTags.includes(tag)}
+                      disabled={
+                        !selectedTags.some(
+                          (selectedTag) => selectedTag.tag === tag.tag
+                        )
+                      }
                     />
                   </div>
                 );
