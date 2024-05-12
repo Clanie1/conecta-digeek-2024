@@ -29,6 +29,7 @@ const SearchList = () => {
       const posts = await getPosts(selectedTagIds);
       setBlogs(posts);
       setFilteredBlogs(posts);
+      return posts;
     },
     [selectedTags]
   );
@@ -43,22 +44,26 @@ const SearchList = () => {
     setAuthors(fetchedAuthors);
   }, []);
 
-  const filterBlogsBySearchQuery = useCallback(() => {
-    if (searchQuery === "") return;
-    const filteredblogs = filteredBlogs.filter((blog) => {
-      return blog.titulo.toLowerCase().includes(searchQuery.toLowerCase());
-    });
-    setFilteredBlogs(filteredblogs);
-  }, [searchQuery]);
+  const filterBlogsBySearchQuery = useCallback(
+    (currBlogs) => {
+      if (searchQuery === "") return currBlogs;
+      const filteredblogs = currBlogs.filter((blog) => {
+        return blog.titulo.toLowerCase().includes(searchQuery.toLowerCase());
+      });
+      return filteredblogs;
+    },
+    [searchQuery]
+  );
 
   const filterBlogs = useCallback(async () => {
     const filters = {
       tags: selectedTags.map((tag) => tag.id),
       author: selectedAuthors.map((author) => author.id),
     };
-    await getBlogs(filters);
-    filterBlogsBySearchQuery();
-  }, []);
+    const currBlogs = await getBlogs(filters);
+    const filteredBySearchQueryBlogs = filterBlogsBySearchQuery(currBlogs);
+    setFilteredBlogs(filteredBySearchQueryBlogs);
+  }, [selectedTags, selectedAuthors, searchQuery]);
 
   useEffect(() => {
     getServerAuthors();
@@ -66,7 +71,8 @@ const SearchList = () => {
   }, []);
 
   useEffect(() => {
-    filterBlogsBySearchQuery();
+    const filteredBySearchQueryBlogs = filterBlogsBySearchQuery(blogs);
+    setFilteredBlogs(filteredBySearchQueryBlogs);
   }, [searchQuery]);
 
   useEffect(() => {
