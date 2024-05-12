@@ -143,3 +143,15 @@ export async function getTags(): Promise<Tag[]> {
         throw error;
     }
 }
+
+export async function getAuthors(): Promise<Tag[]> {
+    const url: string = 'https://directus-10-10-4-p3ab.onrender.com/items/authors';
+    try {
+        const response: AxiosResponse<Tag[]> = await axios.get(url);
+        console.log('Tags retrieved successfully:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('There was a problem with your Axios request:', error);
+        throw error;
+    }
+}
