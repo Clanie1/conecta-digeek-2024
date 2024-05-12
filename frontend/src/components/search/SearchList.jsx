@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import BlogCard from "./BlogCard";
-import { getPosts, getTags } from "../../services/functions";
+import { getPosts, getTags, getAuthors } from "../../services/functions";
 import TagLabel from "./TagLabel";
 import { RiAccountCircleFill } from "react-icons/ri";
 import LoadingSpinner from "../LoadingSpinner";
+import AuthorLabel from "./AuthorLabel";
 
 const SearchList = () => {
   const [blogs, setBlogs] = useState([]);
@@ -17,6 +18,7 @@ const SearchList = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [selectedAuthors, setSelectedAuthors] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // View More
   const [viewMoreTags, setViewMoreTags] = useState(false);
@@ -34,24 +36,44 @@ const SearchList = () => {
   const getServerTags = useCallback(async () => {
     const fetchedTags = await getTags();
     setTags(fetchedTags);
-  }, [getTags, setTags]);
+  }, []);
 
-  const searchBlogs = useCallback(() => {
-    const searchValue = inputRef.current.value;
-    const filteredblogs = blogs.filter((blog) => {
-      return blog.name.toLowerCase().includes(searchValue.toLowerCase());
+  const getServerAuthors = useCallback(async () => {
+    const fetchedAuthors = await getAuthors();
+    setAuthors(fetchedAuthors);
+  }, []);
+
+  const filterBlogsBySearchQuery = useCallback(() => {
+    if (searchQuery === "") return;
+    const filteredblogs = filteredBlogs.filter((blog) => {
+      return blog.titulo.toLowerCase().includes(searchQuery.toLowerCase());
     });
     setFilteredBlogs(filteredblogs);
-  }, [inputRef, blogs]);
+  }, [searchQuery]);
 
-  useEffect(() => {
-    getServerTags();
+  const filterBlogs = useCallback(async () => {
     const filters = {
       tags: selectedTags.map((tag) => tag.id),
-      author: [],
+      author: selectedAuthors.map((author) => author.id),
     };
-    getBlogs(filters);
-  }, [selectedTags]);
+    await getBlogs(filters);
+    filterBlogsBySearchQuery();
+  }, []);
+
+  useEffect(() => {
+    getServerAuthors();
+    getServerTags();
+  }, []);
+
+  useEffect(() => {
+    filterBlogsBySearchQuery();
+  }, [searchQuery]);
+
+  useEffect(() => {
+    filterBlogs();
+  }, [selectedTags, selectedAuthors]);
+
+  console.log(blogs);
 
   return (
     <div className=" max-w-[1400px] w-full mx-auto justify-center flex ">
@@ -77,11 +99,8 @@ const SearchList = () => {
               </svg>
             </div>
             <input
-              ref={inputRef}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  searchBlogs();
-                }
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
               }}
               type="search"
               className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-transparent focus:ring-none focus:border-gray-50 focus:outline-slate-300 focus:outline-[1px]"
@@ -105,7 +124,13 @@ const SearchList = () => {
       <div className="w-3/5 max-h-[calc(100vh-60px)] overflow-scroll hidden md:flex flex-col px-4 py-6  border-l-[1px] border-gray-200  gap-6 scrollbar-hide">
         {/* Tags */}
         <div>
-          <button className="underline text-sm hover:text-[#7678FFFF]">
+          <button
+            className="underline text-sm hover:text-[#7678FFFF]"
+            onClick={() => {
+              setSelectedTags([]);
+              setSelectedAuthors([]);
+            }}
+          >
             Limpiar Filtros
           </button>
           <h1 className="font-medium">Tags Recomendados</h1>
@@ -197,30 +222,86 @@ const SearchList = () => {
         {/* Autores */}
         <div>
           <h1 className="font-medium">Autores Recomendados</h1>
-          <div className="flex flex-col gap-2 text-sm text-slate-600 my-4">
-            <div className="flex items-center">
-              <RiAccountCircleFill className="h-[20px] w-auto text-[#7678FF]" />
-              <label className="sm text-slate-600">Carlos Aleman</label>
-            </div>
-            <div className="flex items-center">
-              <RiAccountCircleFill className="h-[20px] w-auto text-[#7678FF]" />
-              <label className="sm text-slate-600">Carlos Aleman</label>
-            </div>
-            <div className="flex items-center">
-              <RiAccountCircleFill className="h-[20px] w-auto text-[#7678FF]" />
-              <label className="sm text-slate-600">Carlos Aleman</label>
-            </div>
-            <div className="flex items-center">
-              <RiAccountCircleFill className="h-[20px] w-auto text-[#7678FF]" />
-              <label className="sm text-slate-600">Carlos Aleman</label>
-            </div>
+          <div className="flex flex-col text-sm text-slate-600 my-4">
+            {authors &&
+              !viewMoreAuthors &&
+              authors.slice(0, 3).map((author) => {
+                return (
+                  <button
+                    className="w-full"
+                    key={author.id}
+                    onClick={() => {
+                      if (
+                        selectedAuthors.some(
+                          (selectedAuthor) => selectedAuthor.id === author.id
+                        )
+                      ) {
+                        const updatedSelectedAuthors = selectedAuthors.filter(
+                          (filterAuthor) => {
+                            return filterAuthor.id != author.id;
+                          }
+                        );
+                        setSelectedAuthors(updatedSelectedAuthors);
+                      } else {
+                        const updatedSelectedAuthors =
+                          selectedAuthors.concat(author);
+                        setSelectedAuthors(updatedSelectedAuthors);
+                      }
+                    }}
+                  >
+                    <AuthorLabel
+                      author={author}
+                      selected={selectedAuthors.some(
+                        (selectedAuthor) => selectedAuthor.id == author.id
+                      )}
+                    />
+                  </button>
+                );
+              })}
+            {authors &&
+              viewMoreAuthors &&
+              authors.map((author, index) => {
+                return (
+                  <button
+                    className="w-full"
+                    key={author.id}
+                    onClick={() => {
+                      if (
+                        selectedAuthors.some(
+                          (selectedAuthor) => selectedAuthor.id === author.id
+                        )
+                      ) {
+                        const updatedSelectedAuthors = selectedAuthors.filter(
+                          (filterAuthor) => {
+                            return filterAuthor.id != author.id;
+                          }
+                        );
+                        setSelectedAuthors(updatedSelectedAuthors);
+                      } else {
+                        const updatedSelectedAuthors =
+                          selectedAuthors.concat(author);
+                        setSelectedAuthors(updatedSelectedAuthors);
+                      }
+                    }}
+                  >
+                    <AuthorLabel
+                      author={author}
+                      selected={selectedAuthors.some(
+                        (selectedAuthor) => selectedAuthor.id == author.id
+                      )}
+                    />
+                  </button>
+                );
+              })}
           </div>
-          <a
+          <button
             className="text-xs text-[#7678FFFF] hover:text-black duration-75"
-            href="#"
+            onClick={() => {
+              setViewMoreAuthors(!viewMoreAuthors);
+            }}
           >
-            Ver mas Usuarios
-          </a>
+            {viewMoreAuthors ? "Ver menos Usuarios" : "Ver mas Usuarios"}
+          </button>
         </div>
       </div>
     </div>
