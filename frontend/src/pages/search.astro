@@ -1,5 +1,10 @@
 ---
+import SearchList from "../components/search/SearchList";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Conecta Digeek"> search page </Layout>
+<Layout title="Conecta Digeek">
+  <div class="flex">
+    <SearchList client:load />
+  </div>
+</Layout>
