@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import BlogCard from "./BlogCard";
-import { getPosts, getTags } from "../../services/functions";
-import TagLabel from "./TagLabel";
+import BlogCard from "../search/BlogCard";
+import { getFeaturedPosts, getTags } from "../../services/functions";
+import TagLabel from "../search/TagLabel";
 import { RiAccountCircleFill } from "react-icons/ri";
 
 const SearchList = () => {
@@ -10,20 +10,16 @@ const SearchList = () => {
 
   // filters
   const [tags, setTags] = useState([]);
-  const [authors, setAuthors] = useState([]);
   const inputRef = useRef(null);
-  const blogDateFilter = useRef(null);
   const [selectedTags, setSelectedTags] = useState([]);
 
   // View More
   const [viewMoreTags, setViewMoreTags] = useState(false);
-  const [viewMoreAuthors, setViewMoreAuthors] = useState(false);
 
   const getBlogs = async () => {
-    const posts = await getPosts(selectedTags.map((tag) => tag.id));
-    console.log(posts, "hola");
-    setBlogs(posts);
-    setFilteredBlogs(posts);
+    const posts = await getFeaturedPosts(selectedTags.map((tag) => tag.id));
+    setBlogs(posts.data);
+    setFilteredBlogs(posts.data);
   };
   const getServerTags = async () => {
     const fetchedTags = await getTags();
@@ -38,32 +34,12 @@ const SearchList = () => {
     setFilteredBlogs(filteredblogs);
   };
 
-  const filterByDate = () => {
-    let filterDate = new Date();
-    switch (blogDateFilter.current.value) {
-      case "today":
-        break;
-      case "lastWeek":
-        filterDate.setDate(filterDate.getDate() - 7);
-        break;
-      case "lastMonth":
-        filterDate.setMonth(filterDate.getMonth() - 1);
-        break;
-    }
-    const blogsOnDate = blogs.filter((blog) => {
-      const blogDate = new Date(blog.date_created);
-      return blogDate > filterDate;
-    });
-    setFilteredBlogs(blogsOnDate);
-  };
-
   useEffect(() => {
     getServerTags();
   }, []);
 
   useEffect(() => {
     getBlogs();
-    filterByDate();
   }, [selectedTags]);
 
   return (
@@ -209,54 +185,6 @@ const SearchList = () => {
           >
             {viewMoreTags ? "Ver menos tags" : "Ver mas tags"}
           </button>
-        </div>
-
-        {/* Autores */}
-        <div>
-          <h1 className="font-medium">Autores Recomendados</h1>
-          <div className="flex flex-col gap-2 text-sm text-slate-600 my-4">
-            <div className="flex items-center">
-              <RiAccountCircleFill className="h-[20px] w-auto text-[#7678FF]" />
-              <label className="sm text-slate-600">Carlos Aleman</label>
-            </div>
-            <div className="flex items-center">
-              <RiAccountCircleFill className="h-[20px] w-auto text-[#7678FF]" />
-              <label className="sm text-slate-600">Carlos Aleman</label>
-            </div>
-            <div className="flex items-center">
-              <RiAccountCircleFill className="h-[20px] w-auto text-[#7678FF]" />
-              <label className="sm text-slate-600">Carlos Aleman</label>
-            </div>
-            <div className="flex items-center">
-              <RiAccountCircleFill className="h-[20px] w-auto text-[#7678FF]" />
-              <label className="sm text-slate-600">Carlos Aleman</label>
-            </div>
-          </div>
-          <a
-            className="text-xs text-[#7678FFFF] hover:text-black duration-75"
-            href="#"
-          >
-            Ver mas Usuarios
-          </a>
-        </div>
-
-        {/* Dia publicado */}
-
-        <div>
-          <h1 className="font-medium">Fecha de Publicacion</h1>
-          <select
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-2"
-            defaultValue={""}
-            onChange={filterByDate}
-            ref={blogDateFilter}
-          >
-            <option disabled hidden value="">
-              Selecciona una Fecha
-            </option>
-            <option value="today">Hoy</option>
-            <option value="lastWeek">Esta Semana</option>
-            <option value="lastMonth">Ultimo Mes</option>
-          </select>
         </div>
       </div>
     </div>
