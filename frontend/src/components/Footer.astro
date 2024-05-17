@@ -3,27 +3,28 @@ import { FiInstagram } from "react-icons/fi";
 import { FiFacebook } from "react-icons/fi";
 ---
 
-<div class="w-full py-4 border-t-[1px] flex gap-10 items-center justify-center">
-  <img
-    src="https://seeklogo.com/images/C/cetys-universidad-logo-402BD53AB0-seeklogo.com.png"
-    class="h-[60px] w-auto object-contain"
-  />
-  <div class="h-[80px] w-[1px] bg-gray-300"></div>
-  <div class="flex flex-col gap-4">
-    <label class="text-sm text-black font-semibold">
-      carlos.aleman@cetys.mx
-    </label>
+<div class="w-full py-16 border-t-2 bg-gray-950 text-white">
+  <div class="flex gap-10 items-center justify-between container mx-auto">
+    <!-- <div class="h-[80px] w-[1px] bg-gray-300"></div> -->
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-2">
+        <label class="text-sm">Digeek</label>
+        <label class="text-sm font-semibold"
+          >Síguenos en nuestras redes sociales!</label
+        >
+      </div>
 
-    <div class="flex gap-2">
-      <a href="" class="">
-        <FiInstagram
-          href="https://www.instagram.com/congresodigeek/"
-          size={20}
-        />
-      </a>
-      <a href="https://www.facebook.com/CongresoDigeek">
-        <FiFacebook href="https://www.facebook.com/CongresoDigeek" size={20} />
-      </a>
+      <div class="flex gap-2">
+        <a href="https://www.instagram.com/congresodigeek/" class="">
+          <FiInstagram size={20} />
+        </a>
+        <a href="https://www.facebook.com/CongresoDigeek">
+          <FiFacebook
+            href="https://www.facebook.com/CongresoDigeek"
+            size={20}
+          />
+        </a>
+      </div>
     </div>
   </div>
 </div>

@@ -35,14 +35,14 @@ const BlogCard = ({ blog }) => {
         <label className="text-sm mt-6 text-gray-500">
           Lectura de {blog.read_time} minutos
         </label>
-        <div className="flex items-center gap-2 mt-4">
+        <div className="flex items-center gap-2 mt-4 flex-wrap">
           {blog.postTags.map((tag) => (
             <TagLabel key={tag.id} tag={tag.tags_id.tag} disabled={false} />
           ))}
         </div>
       </div>
 
-      <div>
+      <div className="ml-4">
         <img src={blog.image} className="h-[150px] w-[200px] object-cover" />
       </div>
     </div>

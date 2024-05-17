@@ -130,15 +130,6 @@ const SearchList = () => {
       <div className="w-3/5 max-h-[calc(100vh-60px)] overflow-scroll hidden md:flex flex-col px-4 py-6  border-l-[1px] border-gray-200  gap-6 scrollbar-hide">
         {/* Tags */}
         <div>
-          <button
-            className="underline text-sm hover:text-[#7678FFFF]"
-            onClick={() => {
-              setSelectedTags([]);
-              setSelectedAuthors([]);
-            }}
-          >
-            Limpiar Filtros
-          </button>
           <h1 className="font-medium">Tags Recomendados</h1>
           <div className="flex flex-wrap gap-2 my-4">
             {tags &&
@@ -214,15 +205,25 @@ const SearchList = () => {
                 );
               })}
           </div>
-          <button
-            className="text-xs text-[#7678FFFF] hover:text-black duration-75"
-            href="#"
-            onClick={() => {
-              setViewMoreTags(!viewMoreTags);
-            }}
-          >
-            {viewMoreTags ? "Ver menos tags" : "Ver mas tags"}
-          </button>
+          <div className="flex flex-col gap-2 items-start">
+            <button
+              className="text-xs text-[#7678FFFF] hover:text-black duration-75"
+              href="#"
+              onClick={() => {
+                setViewMoreTags(!viewMoreTags);
+              }}
+            >
+              {viewMoreTags ? "Ver menos tags" : "Ver mas tags"}
+            </button>
+            <button
+              className="text-xs text-black underline hover:text-black duration-75"
+              onClick={() => {
+                setSelectedTags([]);
+              }}
+            >
+              Limpiar Tags
+            </button>
+          </div>
         </div>
 
         {/* Autores */}

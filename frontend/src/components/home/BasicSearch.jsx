@@ -71,39 +71,9 @@ const BasicSearch = () => {
 
   return (
     <div className="max-w-[1400px] w-full mx-auto justify-center flex">
-      <div className="w-full max-h-[calc(100vh-60px)] p-10 overflow-scroll scrollbar-hide">
-        {/* search bar */}
-        <div className="">
-          <div className="relative">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                />
-              </svg>
-            </div>
-            <input
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-              }}
-              type="search"
-              className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-transparent focus:ring-none focus:border-gray-50 focus:outline-slate-300 focus:outline-[1px]"
-              placeholder="Search"
-            />
-          </div>
-        </div>
+      <div className="w-full max-h-[calc(100vh-60px)] pt-0 p-10 overflow-scroll scrollbar-hide">
         {/* blogs */}
-        <div className="flex w-full mt-4 justify-center">
+        <div className="flex w-full justify-center">
           <div className="w-full md:px-10 justify-center items-center flex flex-col">
             {filteredBlogs.length === 0 && <LoadingSpinner />}
             {filteredBlogs.length > 0 &&
@@ -118,14 +88,6 @@ const BasicSearch = () => {
       <div className="w-3/5 max-h-[calc(100vh-60px)] overflow-scroll hidden md:flex flex-col px-4 py-6 border-l-[1px] border-gray-200 gap-6 scrollbar-hide">
         {/* Tags */}
         <div>
-          <button
-            className="underline text-sm hover:text-[#7678FFFF]"
-            onClick={() => {
-              setSelectedTags([]);
-            }}
-          >
-            Limpiar Tags
-          </button>
           <h1 className="font-medium">Tags Recomendados</h1>
           <div className="flex flex-wrap gap-2 my-4">
             {tags &&
@@ -202,15 +164,25 @@ const BasicSearch = () => {
                 );
               })}
           </div>
-          <button
-            className="text-xs text-[#7678FFFF] hover:text-black duration-75"
-            href="#"
-            onClick={() => {
-              setViewMoreTags(!viewMoreTags);
-            }}
-          >
-            {viewMoreTags ? "Ver menos tags" : "Ver mas tags"}
-          </button>
+          <div className="flex flex-col gap-2 items-start">
+            <button
+              className="text-xs text-[#7678FFFF] hover:text-black duration-75"
+              href="#"
+              onClick={() => {
+                setViewMoreTags(!viewMoreTags);
+              }}
+            >
+              {viewMoreTags ? "Ver menos tags" : "Ver mas tags"}
+            </button>
+            <button
+              className="text-xs text-black underline hover:text-black duration-75"
+              onClick={() => {
+                setSelectedTags([]);
+              }}
+            >
+              Limpiar Tags
+            </button>
+          </div>
         </div>
       </div>
     </div>

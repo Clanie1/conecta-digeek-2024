@@ -18,7 +18,7 @@ const HeroSection = () => {
         </div>
         <a
           href="/search"
-          className="flex justify-center items-center text-lg rounded-2xl border-2 border-white bg-white font-semibold text-[#6163d4] px-3 py-1 w-1/3 transition duration-300 ease-in-out hover:bg-white hover:text-[#6163d4] hover:scale-110"
+          className="flex justify-center items-center text-lg rounded-md border-2 border-white bg-white font-semibold text-[#6163d4] px-3 py-1 w-1/3 transition duration-300 ease-in-out hover:bg-white hover:text-[#6163d4] hover:scale-110"
         >
           Start now
         </a>

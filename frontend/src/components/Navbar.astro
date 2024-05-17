@@ -1,14 +1,22 @@
 ---
-import { IoSearchOutline } from "react-icons/io5";
+import { IoSearch, IoSearchOutline } from "react-icons/io5";
 ---
 
 <div
-  class="text-white h-[60px] border-b-[.5px] border-black/30 flex items-center px-5 py-[30px]"
+  class="text-white h-[60px] border-b-[.5px] border-black/30 flex items-center px-5 py-[30px] justify-between"
 >
-  <a class="text-black flex items-center gap-2" href="/">
+  <a class="text-black flex items-center gap-2 cursor-pointer" href="/">
     <img src="/Favicon.png" class="w-8 h-8" />
-    <label class="font-bolda text-slate-500">Conecta Digeek</label>
-    <a class="font-bold text-black ml-[40px] text-sm transition duration-150 hover:scale-110" href="/"> Home </a>
-    <a class="font-bold text-black ml-[20px] text-sm transition duration-150 hover:scale-110" href="search"> Search </a>
+    <label class="font-bold text-slate-500 cursor-pointer">Conecta Digeek</label
+    >
   </a>
+  <div>
+    <a
+      class="flex items-center gap-2 transition duration-150 hover:scale-110"
+      href="search"
+    >
+      <IoSearch color="black" />
+      <span class="font-bold text-black text-sm"> Search </span>
+    </a>
+  </div>
 </div>

@@ -107,12 +107,12 @@ export async function getPosts(filters: Filter): Promise<Post[]> {
   });
 
   try {
-    const response: AxiosResponse<Post[]> = await axios.get(url);
+    const response: AxiosResponse<{ data: Post[] }> = await axios.get(url);
     console.log("Posts retrieved successfully:", response.data);
-    response.data.forEach((post) => {
+    response.data.data.forEach((post) => {
       console.log(post.postTags);
     });
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("There was a problem with your Axios request:", error);
     throw error;
