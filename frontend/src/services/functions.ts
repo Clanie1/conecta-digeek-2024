@@ -135,7 +135,6 @@ export async function getFeaturedPosts(): Promise<Post[]> {
     "https://directus-10-10-4-p3ab.onrender.com/items/posts?fields=*.*,postTags.tags_id.*&filter[featured][_eq]=true";
   try {
     const response: AxiosResponse<Post[]> = await axios.get(url);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("There was a problem with your Axios request:", error);

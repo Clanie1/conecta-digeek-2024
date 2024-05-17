@@ -23,6 +23,7 @@ const SearchList = () => {
   const getBlogs = useCallback(
     async (selectedTagIds) => {
       const posts = await getFeaturedPosts(selectedTagIds);
+      console.log(posts.data);
       setBlogs(posts.data);
       setFilteredBlogs(posts.data);
       return posts.data;
@@ -67,8 +68,6 @@ const SearchList = () => {
   useEffect(() => {
     filterBlogs();
   }, [selectedTags]);
-
-  console.log(blogs);
 
   return (
     <div className=" max-w-[1400px] w-full mx-auto justify-center flex ">
@@ -212,8 +211,6 @@ const SearchList = () => {
             {viewMoreTags ? "Ver menos tags" : "Ver mas tags"}
           </button>
         </div>
-
-        {/* Autores */}
       </div>
     </div>
   );
