@@ -117,7 +117,7 @@ export async function getPosts(filters: Filter): Promise<Post[]> {
 
 export async function getSinglePost(postId: number): Promise<Post> {
   try {
-    const url: string = `https://directus-10-10-4-p3ab.onrender.com/items/posts/${postId}`;
+    const url: string = `https://directus-10-10-4-p3ab.onrender.com/items/posts/${postId}?fields=*.*`;
     const response: AxiosResponse<Post> = await axios.get(url);
     return response.data;
   } catch (error) {
