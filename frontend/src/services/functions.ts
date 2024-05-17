@@ -121,7 +121,7 @@ export async function getPosts(filters: Filter): Promise<Post[]> {
 
 export async function getSinglePost(postId: number): Promise<Post> {
   try {
-    const url: string = `https://directus-10-10-4-p3ab.onrender.com/items/posts/${postId}`;
+    const url: string = `https://directus-10-10-4-p3ab.onrender.com/items/posts/${postId}?fields=*.*`;
     const response: AxiosResponse<Post> = await axios.get(url);
     return response.data;
   } catch (error) {
@@ -130,12 +130,22 @@ export async function getSinglePost(postId: number): Promise<Post> {
   }
 }
 
-export async function getFeaturedPosts(): Promise<Post[]> {
-  const url: string =
-    "https://directus-10-10-4-p3ab.onrender.com/items/posts?fields=*.*,postTags.tags_id.*&filter[featured][_eq]=true";
+export async function getFeaturedPosts(filters : Filter): Promise<Post[]> {
+  let url: string =
+  "https://directus-10-10-4-p3ab.onrender.com/items/posts?fields=*.*,postTags.tags_id.*&filter[featured][_eq]=true";
+  filters.tags.forEach((filter, index) => {
+    const tagsFilter: string = `&filter[_and][0][_or][${index}][postTags][tags_id][_in]=${filter}`;
+    url += tagsFilter;
+  });
+
+  filters.author.forEach((filter, index) => {
+    const authorFiler: string = `&filter[_and][1][_or][${index}][author][id]=${filter}`;
+    url += authorFiler;
+  });
+  
   try {
-    const response: AxiosResponse<Post[]> = await axios.get(url);
-    return response.data;
+    const response: AxiosResponse<{ data: Post[] }> = await axios.get(url);
+    return response.data.data;
   } catch (error) {
     console.error("There was a problem with your Axios request:", error);
     throw error;
