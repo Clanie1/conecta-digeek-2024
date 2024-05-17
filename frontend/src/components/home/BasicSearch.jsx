@@ -5,9 +5,9 @@ import TagLabel from "../search/TagLabel";
 import { RiAccountCircleFill } from "react-icons/ri";
 import LoadingSpinner from "../LoadingSpinner";
 
-const SearchList = () => {
+const BasicSearch = () => {
   const [blogs, setBlogs] = useState([]);
-  const [filteredBlogs, setFilteredBlogs] = useState(undefined);
+  const [filteredBlogs, setFilteredBlogs] = useState([]); // Inicializa como un array vacío
 
   //ref
   const inputRef = useRef(null);
@@ -21,14 +21,14 @@ const SearchList = () => {
   const [viewMoreTags, setViewMoreTags] = useState(false);
 
   const getBlogs = useCallback(
-    async (selectedTagIds) => {
-      const posts = await getFeaturedPosts(selectedTagIds);
-      console.log(posts.data);
-      setBlogs(posts.data);
-      setFilteredBlogs(posts.data);
-      return posts.data;
+    async (filters) => {
+      const posts = await getFeaturedPosts(filters);
+      console.log(posts, "sfa");
+      setBlogs(posts);
+      setFilteredBlogs(posts);
+      return posts;
     },
-    [selectedTags]
+    [] // Las dependencias están vacías porque `filters` se pasan como argumento
   );
 
   const getServerTags = useCallback(async () => {
@@ -54,23 +54,23 @@ const SearchList = () => {
     const currBlogs = await getBlogs(filters);
     const filteredBySearchQueryBlogs = filterBlogsBySearchQuery(currBlogs);
     setFilteredBlogs(filteredBySearchQueryBlogs);
-  }, [selectedTags, searchQuery]);
+  }, [selectedTags, searchQuery, getBlogs, filterBlogsBySearchQuery]);
 
   useEffect(() => {
     getServerTags();
-  }, []);
+  }, [getServerTags]);
 
   useEffect(() => {
     const filteredBySearchQueryBlogs = filterBlogsBySearchQuery(blogs);
     setFilteredBlogs(filteredBySearchQueryBlogs);
-  }, [searchQuery]);
+  }, [searchQuery, blogs, filterBlogsBySearchQuery]);
 
   useEffect(() => {
     filterBlogs();
-  }, [selectedTags]);
+  }, [selectedTags, filterBlogs]);
 
   return (
-    <div className=" max-w-[1400px] w-full mx-auto justify-center flex ">
+    <div className="max-w-[1400px] w-full mx-auto justify-center flex">
       <div className="w-full max-h-[calc(100vh-60px)] p-10 overflow-scroll scrollbar-hide">
         {/* search bar */}
         <div className="">
@@ -104,9 +104,9 @@ const SearchList = () => {
         </div>
         {/* blogs */}
         <div className="flex w-full mt-4 justify-center">
-          <div className="w-full  md:px-10  justify-center items-center flex flex-col ">
-            {filteredBlogs == undefined && <LoadingSpinner />}
-            {filteredBlogs &&
+          <div className="w-full md:px-10 justify-center items-center flex flex-col">
+            {filteredBlogs.length === 0 && <LoadingSpinner />}
+            {filteredBlogs.length > 0 &&
               filteredBlogs.map((blog, index) => {
                 return <BlogCard key={index} blog={blog} />;
               })}
@@ -115,7 +115,7 @@ const SearchList = () => {
       </div>
 
       {/* filters */}
-      <div className="w-3/5 max-h-[calc(100vh-60px)] overflow-scroll hidden md:flex flex-col px-4 py-6  border-l-[1px] border-gray-200  gap-6 scrollbar-hide">
+      <div className="w-3/5 max-h-[calc(100vh-60px)] overflow-scroll hidden md:flex flex-col px-4 py-6 border-l-[1px] border-gray-200 gap-6 scrollbar-hide">
         {/* Tags */}
         <div>
           <button
@@ -124,7 +124,7 @@ const SearchList = () => {
               setSelectedTags([]);
             }}
           >
-            Limpiar Filtros
+            Limpiar Tags
           </button>
           <h1 className="font-medium">Tags Recomendados</h1>
           <div className="flex flex-wrap gap-2 my-4">
@@ -148,6 +148,7 @@ const SearchList = () => {
                       } else {
                         const updatedSelectedTags = selectedTags.concat(tag);
                         setSelectedTags(updatedSelectedTags);
+                        console.log(selectedTags);
                       }
                     }}
                     className="cursor-pointer"
@@ -216,4 +217,4 @@ const SearchList = () => {
   );
 };
 
-export default SearchList;
+export default BasicSearch;

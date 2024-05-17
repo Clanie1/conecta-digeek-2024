@@ -8,11 +8,6 @@ const HeroSection = () => {
       <FaGear className="absolute text-[#2a366f] opacity-50 text-[15rem] z-0 -left-32 -bottom-20" />
       <FaGear className="absolute text-[#2a366f] opacity-50 text-[17rem] z-0 -right-32 -top-20" />
       <FaGear className="absolute text-[#2a366f] opacity-50 text-[17rem] z-0 -right-44 -bottom-24" />
-      {/* <FaGear className="absolute text-[#2a366f] opacity-50 text-[22rem] z-0 -top-24 left-72" />
-      <FaGear className="absolute text-[#2a366f] opacity-50 text-[21rem] z-0 -bottom-44 left-[34rem]" />
-      <FaGear className="absolute text-[#2a366f] opacity-50 text-[24rem] z-0 -bottom-60 right-52" />
-      <FaGear className="absolute text-[#2a366f] opacity-50 text-[24rem] z-0 -top-40 right-[32rem]" /> */}
-
       <div className="flex flex-col gap-4 w-auto z-10">
         <div className="text-8xl font-bold text-white drop-shadow-lg">
           <p>Embrace</p>

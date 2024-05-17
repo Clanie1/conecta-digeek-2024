@@ -130,19 +130,14 @@ export async function getSinglePost(postId: number): Promise<Post> {
   }
 }
 
-export async function getFeaturedPosts(filters : Filter): Promise<Post[]> {
+export async function getFeaturedPosts(filters: Filter): Promise<Post[]> {
   let url: string =
-  "https://directus-10-10-4-p3ab.onrender.com/items/posts?fields=*.*,postTags.tags_id.*&filter[featured][_eq]=true";
+    "https://directus-10-10-4-p3ab.onrender.com/items/posts?fields=*.*,postTags.tags_id.*&filter[featured][_eq]=true";
   filters.tags.forEach((filter, index) => {
     const tagsFilter: string = `&filter[_and][0][_or][${index}][postTags][tags_id][_in]=${filter}`;
     url += tagsFilter;
   });
 
-  filters.author.forEach((filter, index) => {
-    const authorFiler: string = `&filter[_and][1][_or][${index}][author][id]=${filter}`;
-    url += authorFiler;
-  });
-  
   try {
     const response: AxiosResponse<{ data: Post[] }> = await axios.get(url);
     return response.data.data;
