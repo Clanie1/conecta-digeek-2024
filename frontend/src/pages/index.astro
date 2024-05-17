@@ -1,11 +1,17 @@
 ---
+import HeroSection from "../components/home/HeroSection";
+import TrendingTags from "../components/home/TrendingTags";
 import Layout from "../layouts/Layout.astro";
+import BasicSearch from "../components/home/BasicSearch";
 ---
 
 <Layout title="Conecta Digeek">
-  <main></main>
-  <div class="flex flex-col">
-    <a href="/search" class="underline font-bold">Go to search page ----></a>
-    <a href="/home" class="underline font-bold">Go to home page ----></a>
+  <HeroSection />
+  <div class="flex flex-col w-full justify-center items-center">
+    <div class="flex justify-center items-start p-10 gap-3 w-4/5">
+      <div class="w-full flex flex-col justify-end">
+        <BasicSearch client:load />
+      </div>
+    </div>
   </div>
 </Layout>
