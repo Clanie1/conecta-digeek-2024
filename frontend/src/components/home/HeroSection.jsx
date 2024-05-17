@@ -29,7 +29,7 @@ const HeroSection = () => {
         </a>
       </div>
 
-      <div className="z-10">test</div>
+      <div className="z-10"></div>
     </div>
   );
 };
