@@ -10,6 +10,9 @@ export default {
           },
         },
       },
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],
