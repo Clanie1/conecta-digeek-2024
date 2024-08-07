@@ -48,7 +48,14 @@ const SearchList = () => {
     (currBlogs) => {
       if (searchQuery === "") return currBlogs;
       const filteredblogs = currBlogs.filter((blog) => {
-        return blog.titulo.toLowerCase().includes(searchQuery.toLowerCase());
+        return (
+          blog.titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          blog.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          blog.author.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          blog.postTags.some((tag) =>
+            tag.tags_id.tag.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+        );
       });
       return filteredblogs;
     },
