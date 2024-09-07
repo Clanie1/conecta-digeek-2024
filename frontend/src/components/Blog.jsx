@@ -21,8 +21,8 @@ function Blog({ blogId }) {
   if (blog === undefined) return <LoadingSpinner />;
 
   return (
-    <div className="flex flex-col py-12">
-      <div className="prose max-w-none w-[50%] m-auto flex flex-col">
+    <div className="flex flex-col py-12 mt-[50px]">
+      <div className="prose max-w-none md:p-0 p-8 md:w-[50%] m-auto flex flex-col">
         <h1>{blog.titulo}</h1>
         <h1 className="text-gray-600 text-xl font-light">{blog.summary}</h1>
         <img

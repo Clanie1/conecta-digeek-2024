@@ -18,9 +18,10 @@ const FeaturedPostsComponent = () => {
 
   return (
     <div className="container mx-auto px-4">
-      {posts.map((post) => {
+      hi
+      {/* {posts.map((post) => {
         return <BlogCard key={post.id} blog={post} />;
-      })}
+      })} */}
     </div>
   );
 };

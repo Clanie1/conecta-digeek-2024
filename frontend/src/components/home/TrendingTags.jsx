@@ -1,4 +1,5 @@
 import React from "react";
+import Tag from "./Tag";
 
 const TrendingTags = () => {
   return (
@@ -6,7 +7,12 @@ const TrendingTags = () => {
       <div className="text-lg font-semibold text-gray-700 mb-4 text-center">
         Trending tags
       </div>
-      <div className="flex flex-wrap justify-center gap-1"></div>
+      <div className="flex flex-wrap justify-center gap-1">
+        hi
+        <Tag tag="Digeek" />
+        <Tag tag="Digeek" />
+        <Tag tag="Digeek" />
+      </div>
     </div>
   );
 };

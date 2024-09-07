@@ -1,5 +1,6 @@
 import axios, { type AxiosResponse } from "axios";
 import readTimeFunction from "./readTimeFunction";
+import queryString from "query-string";
 
 interface Post {
   id?: number;
@@ -89,6 +90,7 @@ export async function updatePost(
 interface Filter {
   tags: number[];
   author: number[];
+  query: string;
   // Agrega aquí cualquier otra propiedad que necesites para los filtros
 }
 
@@ -106,6 +108,16 @@ export async function getPosts(filters: Filter): Promise<Post[]> {
     url += authorFiler;
   });
 
+  if (filters.query.length > 0) {
+    const titleFilter = `&filter[_and][2][_or][0][titulo][_contains]=${filters.query}`;
+    const summaryFilter = `&filter[_and][2][_or][1][summary][_contains]=${filters.query}`;
+    const contentFilter = `&filter[_and][2][_or][2][content][_contains]=${filters.query}`;
+    const authorFilter = `&filter[_and][2][_or][3][author][name][_contains]=${filters.query}`;
+
+    const finalFilter =
+      titleFilter + summaryFilter + contentFilter + authorFilter;
+    url += finalFilter;
+  }
   try {
     const response: AxiosResponse<{ data: Post[] }> = await axios.get(url);
     console.log("Posts retrieved successfully:", response.data);
@@ -126,6 +138,18 @@ export async function getSinglePost(postId: number): Promise<Post> {
     return response.data;
   } catch (error) {
     console.error("There was a problem with your Axios request:", error);
+    throw error;
+  }
+}
+export async function getHeroContent(): Promise<{
+  title: string;
+  subtitle: string;
+}> {
+  try {
+    const url = "https://directus-10-10-4-p3ab.onrender.com/items/hero";
+    const response = await axios.get(url);
+    return response.data.data;
+  } catch (error) {
     throw error;
   }
 }
@@ -161,6 +185,18 @@ export async function getTags(): Promise<Tag[]> {
 export async function getAuthors(): Promise<Author[]> {
   const url: string =
     "https://directus-10-10-4-p3ab.onrender.com/items/authors";
+  try {
+    const response: AxiosResponse<{ data: Author[] }> = await axios.get(url);
+    return response.data.data;
+  } catch (error) {
+    console.error("There was a problem with your Axios request:", error);
+    throw error;
+  }
+}
+
+export async function getFeaturedAuthors(): Promise<Author[]> {
+  const url: string =
+    "https://directus-10-10-4-p3ab.onrender.com/items/authors?filter[featured][_eq]=true";
   try {
     const response: AxiosResponse<{ data: Author[] }> = await axios.get(url);
     return response.data.data;

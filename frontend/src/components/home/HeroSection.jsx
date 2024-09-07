@@ -1,29 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { BsLink, BsLink45Deg } from "react-icons/bs";
 import { FaGear } from "react-icons/fa6";
+import { getHeroContent } from "../../services/functions";
+import { motion } from "framer-motion";
 
 const HeroSection = () => {
-  return (
-    <div className="flex w-full justify-around items-center h-[430px] bg-gradient-to-r from-purple-500 to-blue-500 px-4 relative overflow-hidden">
-      <FaGear className="absolute text-[#2a366f] opacity-50 text-[20rem] z-0 -left-32 -top-32" />
-      <FaGear className="absolute text-[#2a366f] opacity-50 text-[15rem] z-0 -left-32 -bottom-20" />
-      <FaGear className="absolute text-[#2a366f] opacity-50 text-[17rem] z-0 -right-32 -top-20" />
-      <FaGear className="absolute text-[#2a366f] opacity-50 text-[17rem] z-0 -right-44 -bottom-24" />
-      <div className="flex flex-col gap-4 w-auto z-10">
-        <div className="text-8xl font-bold text-white drop-shadow-lg">
-          <p>Embrace</p>
-          <p>Engineering</p>
-        </div>
-        <div className="flex flex-col text-white font-light text-3xl">
-          Share your work to the world
-        </div>
-        <a
-          href="/search"
-          className="flex justify-center items-center text-lg rounded-md border-2 border-white bg-white font-semibold text-[#6163d4] px-3 py-1 w-1/3 transition duration-300 ease-in-out hover:bg-white hover:text-[#6163d4] hover:scale-110"
-        >
-          Start now
-        </a>
-      </div>
+  const [isLoading, setIsLoading] = useState(true);
+  const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
+  const [targetPost, setTargetPost] = useState("");
 
+  const getHero = useCallback(async () => {
+    const content = await getHeroContent();
+    setTitle(content.title);
+    setSubtitle(content.subtitle);
+    setTargetPost(content.target_post);
+    setIsLoading(false);
+  });
+
+  useEffect(() => {
+    getHero();
+  }, []);
+
+  return (
+    <div className="flex w-full justify-left items-center min-h-[430px] bg-gradient-to-r from-purple-500 to-blue-500 relative overflow-hidden container mx-auto md:rounded-md md:mt-[100px] mt-10 md:px-20 px-5">
+      {!isLoading && (
+        <motion.div
+          className="flex flex-col gap-4 w-auto z-10"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <div className="text-4xl md:text-8xl font-bold text-white drop-shadow-lg">
+            {title}
+          </div>
+          <div className="flex flex-col text-white text-xl md:text-3xl">
+            {subtitle}
+          </div>
+          <a
+            href={`/blog/${targetPost}`}
+            className="flex justify-center items-center text-lg rounded-md border-2 border-white bg-white font-semibold text-[#6163d4] px-3 py-1 w-1/3 transition duration-300 ease-in-out hover:bg-white hover:text-[#6163d4] hover:scale-105 gap-2"
+          >
+            <BsLink45Deg />
+            Ver mas
+          </a>
+        </motion.div>
+      )}
       <div className="z-10"></div>
     </div>
   );

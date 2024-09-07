@@ -1,12 +1,9 @@
 function LoadingSpinner() {
   return (
-    <div
-      role="status"
-      className="w-screen h-[calc(100vh-60px)] flex justify-center items-center"
-    >
+    <div role="status" className="flex justify-center items-center">
       <svg
         aria-hidden="true"
-        className="w-12 h-12 text-gray-200 animate-spin dark:text-black fill-[#7678FF]"
+        className="w-8 h-8 text-gray-200 animate-spin dark:text-black fill-[#7678FF]"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
