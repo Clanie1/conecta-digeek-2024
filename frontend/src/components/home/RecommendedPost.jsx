@@ -16,7 +16,7 @@ const RecommendedPost = ({ post, delay }) => {
         <img
           src={post.image}
           alt="placeholder"
-          className="bg-contain w-full h-full rounded-md bg-si"
+          className="bg-contain w-full h-full rounded-md bg-si object-cover"
         />
       </div>
       <div className="w-full md:w-[200px]">
@@ -25,7 +25,7 @@ const RecommendedPost = ({ post, delay }) => {
             <img
               src={post.author.image}
               alt=""
-              className="w-full h-full bg-contain rounded-full"
+              className="w-full h-full object-contain rounded-full"
             />
           </div>
           {post.author.name}
