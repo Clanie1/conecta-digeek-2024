@@ -93,7 +93,36 @@ const SearchList = () => {
     setSearchQuerySet(true);
   }, []);
 
-  console.log(blogs);
+  const getRecommendedTags = useCallback(() => {
+    // Find tags based on the filtered blogs
+    if (filteredBlogs == undefined) return [];
+
+    const tagCount = new Map();
+    for (const blog of filteredBlogs) {
+      for (const tag of blog.postTags) {
+        tagCount.set(tag.tags_id, (tagCount.get(tag.tags_id) || 0) + 1);
+      }
+    }
+
+    const sortedTags = Array.from(tagCount.entries()).sort((a, b) => b[1] - a[1]);
+    const recommendedTags = sortedTags.slice(0, 5).map((tag) => tag[0]);
+    return recommendedTags;
+  }, [filteredBlogs]);
+
+  const getRecommendedAuthors = useCallback(() => {
+    if (filteredBlogs == undefined) return [];
+
+    const authorCount = new Map();
+    for (const blog of filteredBlogs) {
+      authorCount.set(blog.author, (authorCount.get(blog.author) || 0) + 1);
+    }
+
+    const sortedAuthors = Array.from(authorCount.entries()).sort(
+      (a, b) => b[1] - a[1]
+    );
+    const recommendedAuthors = sortedAuthors.slice(0, 3).map((author) => author[0]);
+    return recommendedAuthors;
+  }, [filteredBlogs]);
 
   return (
     <div className="w-full mb-10">
@@ -145,7 +174,7 @@ const SearchList = () => {
               )}
               {tags &&
                 !viewMoreTags &&
-                tags.slice(0, 5).map((tag, index) => {
+                getRecommendedTags().map((tag, index) => {
                   return (
                     <div
                       onClick={() => {
@@ -247,7 +276,7 @@ const SearchList = () => {
               )}
               {authors &&
                 !viewMoreAuthors &&
-                authors.slice(0, 3).map((author, index) => {
+                getRecommendedAuthors().map((author, index) => {
                   return (
                     <button
                       className="w-full"
@@ -324,7 +353,7 @@ const SearchList = () => {
                 setViewMoreAuthors(!viewMoreAuthors);
               }}
             >
-              {viewMoreAuthors ? "Ver menos Usuarios" : "Ver mas Usuarios"}
+              {viewMoreAuthors ? "Ver menos Autores" : "Ver mas Autores"}
             </button>
           </div>
         </div>

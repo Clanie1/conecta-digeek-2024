@@ -39,9 +39,6 @@ const SearchPostCard = ({ post, delay }) => {
           {post.postTags.map((tag) => (
             <Tag tag={tag.tags_id.tag}></Tag>
           ))}
-          <Tag tag="ISW"></Tag>
-          <Tag tag="IDC"></Tag>
-          <Tag tag="Direccion"></Tag>
         </div>
       </div>
     </motion.a>
