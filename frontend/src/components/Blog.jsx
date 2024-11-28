@@ -29,14 +29,14 @@ function Blog({ blogId }) {
           src={blog.image}
           className="w-full max-h-[600px] object-cover m-auto"
         />
-        <div className="border-t-[2px] border-b-[2px] mt-8 flex text-xs py-4 h-full justify-between">
+        <div className="border-t-[2px] border-b-[2px] mt-8 flex text-xs py-4  justify-between">
           <div className="flex h-full  ">
             {/* <RiAccountCircleFill className="h-[50px] w-auto text-[#7678FF]" /> */}
             <img
               src={blog.author.image}
               className="w-[50px] m-0 border-none h-[50px] border-2 rounded-full"
             />
-            <div className="flex flex-col h-full justify-between py-[2px] ml-4">
+            <div className="flex flex-col  justify-between py-[2px] ml-4">
               <div className="text-lg font-bold">{blog.author.name}</div>
               <div className="text-md">
                 {new Date(blog.date_created).toLocaleDateString("es-ES", {

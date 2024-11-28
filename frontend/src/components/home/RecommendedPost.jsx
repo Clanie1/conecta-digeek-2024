@@ -31,7 +31,7 @@ const RecommendedPost = ({ post, delay }) => {
           {post.author.name}
         </div>
         <h3 className="text-md font-bold">{post.titulo}</h3>
-        <p className="text-sm">{trim(post.summary, 75)}</p>
+        <p className="text-sm">{trim(post.summary ?? "", 75)}</p>
         <span className="text-xs text-gray-400">
           Lectura de {post.read_time} minutos
         </span>

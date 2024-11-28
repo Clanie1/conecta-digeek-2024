@@ -17,7 +17,7 @@ const SearchHero = () => {
             Buscar Blogs
           </div>
           <div className="flex flex-col text-white text-xl md:text-3xl">
-            Encuentra la informacion mas actualizada
+            Encuentra la información más actualizada
           </div>
         </motion.div>
       }
